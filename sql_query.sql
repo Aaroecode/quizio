@@ -70,3 +70,10 @@ CREATE TABLE user_profile (
 -- Insert dummy data into user_profile
 INSERT INTO user_profile (name, email, gender, bio)
 VALUES ('John Doe', 'john@example.com', 'male', 'This is a sample bio');
+
+CREATE TABLE faq (questionNumber int(3), question varchar(255), questionDescription VARCHAR(300), solution varchar(5000))
+
+CREATE TABLE ticket (ticketId int(5) SERIAL PRIMARY KEY, 
+    userId, issueDescription varchar(3000), 
+    submittedAt updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
+

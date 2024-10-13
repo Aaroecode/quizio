@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.api.v1.auth import router as auth_router
+from app.api.v1.support import router as support_router
 from app.db.postgres import PostgresDB
 import logging
 
@@ -36,6 +37,7 @@ async def db_connection_check():
 
 # Include the authentication router
 app.include_router(auth_router, tags=["auth"])
+app.include_router(support_router, tags=["faq", "support"])
 
 # Run the app with: uvicorn main:app --reload
 if __name__ == "__main__":
