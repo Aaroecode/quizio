@@ -12,7 +12,7 @@ app = FastAPI()
 db = PostgresDB("postgresql://admin:admin@localhost:5432/quizo")
 
 @app.on_event("startup")
-async def startup():
+async def startup(tags=["utility-api"]):
 
     try:
         await db.connect()  # Establish a connection to the database
@@ -26,8 +26,8 @@ async def shutdown():
     await db.disconnect()
     logging.info("Database connection pool closed.")
 
-@app.get("/test-db")
-async def test_db():
+@app.get("/db-connection-check")
+async def db_connection_check():
     try:
         await db.execute("SELECT 1")  # Test query to check connection
         return {"status": "Database is reachable"}
