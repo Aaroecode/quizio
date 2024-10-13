@@ -50,21 +50,55 @@ class PostgresDB:
         self.pool = None
 
     async def connect(self):
-        self.pool = await asyncpg.create_pool(self.database_url)
+        """Establish a connection pool to the database."""
+        if self.pool is None:  # Only create a pool if it doesn't exist
+            self.pool = await asyncpg.create_pool(self.database_url)
 
     async def fetch(self, query: str, *args) -> Optional[asyncpg.Record]:
+        await self.connect()  # Ensure the connection pool is established
+        if self.pool is None:
+            raise Exception("Database connection pool is not initialized.")
+        
         async with self.pool.acquire() as connection:
             return await connection.fetch(query, *args)
 
     async def fetch_one(self, query: str, *args) -> Optional[asyncpg.Record]:
+        await self.connect()  # Ensure the connection pool is established
+        if self.pool is None:
+            raise Exception("Database connection pool is not initialized.")
+        
         async with self.pool.acquire() as connection:
             return await connection.fetchrow(query, *args)
 
     async def execute(self, query: str, *args) -> str:
-        async with self.pool.acquire() as connection:
-            return await connection.execute(query, *args)
+        """Execute a SQL query and return the status message.
+
+        Args:
+            query (str): The SQL query to execute.
+            *args: Any arguments to pass to the query.
+
+        Returns:
+            str: The status message returned from the query.
+        """
+        await self.connect()  # Ensure the connection pool is established
+        
+        if self.pool is None:
+            raise Exception("Database connection pool is not initialized.")
+        
+        print(f"Executing query: {query}")
+        print(f"Arguments: {args}")
+        
+        try:
+            async with self.pool.acquire() as connection:
+                return await connection.execute(query, *args)
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+            raise
 
     async def disconnect(self):
-        await self.pool.close()
+        """Close the connection pool."""
+        if self.pool:
+            await self.pool.close()
+            self.pool = None  # Clear the pool after closing
 
 

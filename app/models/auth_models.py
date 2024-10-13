@@ -2,13 +2,14 @@ from pydantic import BaseModel
 from typing import Optional
 
 
-class CreateUser(BaseModel):
+
+class SignupUser(BaseModel):
+    id: Optional[int]  # Make id optional
     name: str
     email: str
     password: str
     gender: str
     termsAccepted: bool
-
 class Login(BaseModel):
     email: str
     password: str
@@ -23,3 +24,9 @@ class ResetPassword(BaseModel):
     email: str
     newPassword: str
 
+class UserProfile(BaseModel):
+    id: int
+    name: str
+    email: str
+    gender: Optional[str] = None
+    bio: Optional[str] = None
