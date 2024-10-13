@@ -44,7 +44,7 @@ class AuthService:
         if not pwd_context.verify(password, user['password']):
             raise HTTPException(status_code=400, detail="Invalid password")
 
-        # Create JWT token
+        
         access_token = jwt.encode({"sub": email}, SECRET_KEY, algorithm="HS256")
         return {"access_token": access_token, "token_type": "bearer"}
 
@@ -96,7 +96,3 @@ class AuthService:
         return {"message": "User profile updated successfully"}
 
 
-# TO DO Add these fields to the User model: 
-#     profile_picture
-#     bio
-#     updated_at

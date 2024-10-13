@@ -6,7 +6,11 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     gender VARCHAR(10) NOT NULL,
     termsAccepted BOOLEAN NOT NULL
+    profilePicture VARCHAR(80) DEFAULT 'https://i.sstatic.net/l60Hf.png',
+    bio VARCHAR(255) DEFAULT NONE,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 -- Insert dummy data into signup_users
 INSERT INTO users (name, email, password, gender, termsAccepted)

@@ -8,15 +8,15 @@ logging.basicConfig(level=logging.INFO)
 
 app = FastAPI()
 
-# Initialize the database connection
+
 db = PostgresDB("postgresql://admin:admin@localhost:5432/quizo")
 
 @app.on_event("startup")
 async def startup(tags=["utility-api"]):
 
     try:
-        await db.connect()  # Establish a connection to the database
-        await db.execute("SELECT 1")  # Test query to check connection
+        await db.connect()  
+        await db.execute("SELECT 1") 
         logging.info("Database connection established successfully.")
     except Exception as e:
         logging.error(f"Failed to connect to the database: {e}")
@@ -29,7 +29,7 @@ async def shutdown():
 @app.get("/db-connection-check")
 async def db_connection_check():
     try:
-        await db.execute("SELECT 1")  # Test query to check connection
+        await db.execute("SELECT 1")
         return {"status": "Database is reachable"}
     except Exception as e:
         return {"error": str(e)}
