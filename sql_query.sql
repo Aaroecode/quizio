@@ -6,8 +6,17 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     gender VARCHAR(10) NOT NULL,
     termsAccepted BOOLEAN NOT NULL
+<<<<<<< HEAD
 );
 
+=======
+    profilePicture VARCHAR(80) DEFAULT 'https://i.sstatic.net/l60Hf.png',
+    bio VARCHAR(255) DEFAULT NONE,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+>>>>>>> minor fixes and requirements.txt
 -- Insert dummy data into signup_users
 INSERT INTO users (name, email, password, gender, termsAccepted)
 VALUES ('John Doe', 'john@example.com', 'password123', 'male', true);
@@ -66,3 +75,13 @@ CREATE TABLE user_profile (
 -- Insert dummy data into user_profile
 INSERT INTO user_profile (name, email, gender, bio)
 VALUES ('John Doe', 'john@example.com', 'male', 'This is a sample bio');
+<<<<<<< HEAD
+=======
+
+CREATE TABLE faq (questionNumber int(3), question varchar(255), questionDescription VARCHAR(300), solution varchar(5000))
+
+CREATE TABLE ticket (ticketId int(5) SERIAL PRIMARY KEY, 
+    userId, issueDescription varchar(3000), 
+    submittedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
+
+>>>>>>> minor fixes and requirements.txt
