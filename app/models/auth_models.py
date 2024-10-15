@@ -4,8 +4,7 @@ from typing import Optional
 
 
 class SignupUser(BaseModel):
-    id: Optional[int]  # Make id optional
-    name: str
+    id: Optional[int] 
     email: str
     password: str
     gender: str

@@ -1,6 +1,6 @@
 
 from app.db.postgres import PostgresDB
-from models.social_models import InviteFriendSchema, FollowUserSchema
+from app.models.social_models import InviteFriendSchema, FollowUserSchema
 
 class SocialService:
     def __init__(self, db: PostgresDB):

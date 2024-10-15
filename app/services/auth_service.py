@@ -1,13 +1,13 @@
 from fastapi import HTTPException, status
 from passlib.context import CryptContext
-from jose import jwt, JWTError
+import jwt
 from pydantic import BaseModel
 from app.db.postgres import PostgresDB
 from app.models.auth_models import SignupUser  # Assuming you have a PostgresDB class in db/postgres.py
 
-# Set up password hashing context
+
 pwd_context = CryptContext(schemes=["bcrypt"], default="bcrypt")
-SECRET_KEY = "your_secret_key"  # Should be moved to environment variables for security
+SECRET_KEY = "your_secret_key"  
 
 class AuthService:
     def __init__(self, db: PostgresDB):

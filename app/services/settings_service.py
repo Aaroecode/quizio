@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 from app.db.postgres import PostgresDB
 from passlib.context import CryptContext
-from models.settings_models import UpdatePreferencesSchema, ChangePasswordSchema, VerifyIdentitySchema
+from app.models.settings_models import UpdatePreferencesSchema, ChangePasswordSchema, VerifyIdentitySchema
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
