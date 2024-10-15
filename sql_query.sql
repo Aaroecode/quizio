@@ -6,17 +6,12 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     gender VARCHAR(10) NOT NULL,
     termsAccepted BOOLEAN NOT NULL
-<<<<<<< HEAD
-);
-
-=======
     profilePicture VARCHAR(80) DEFAULT 'https://i.sstatic.net/l60Hf.png',
     bio VARCHAR(255) DEFAULT NONE,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
->>>>>>> minor fixes and requirements.txt
 -- Insert dummy data into signup_users
 INSERT INTO users (name, email, password, gender, termsAccepted)
 VALUES ('John Doe', 'john@example.com', 'password123', 'male', true);
@@ -75,8 +70,6 @@ CREATE TABLE user_profile (
 -- Insert dummy data into user_profile
 INSERT INTO user_profile (name, email, gender, bio)
 VALUES ('John Doe', 'john@example.com', 'male', 'This is a sample bio');
-<<<<<<< HEAD
-=======
 
 CREATE TABLE faq (questionNumber int(3), question varchar(255), questionDescription VARCHAR(300), solution varchar(5000))
 
@@ -84,4 +77,58 @@ CREATE TABLE ticket (ticketId int(5) SERIAL PRIMARY KEY,
     userId, issueDescription varchar(3000), 
     submittedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
 
->>>>>>> minor fixes and requirements.txt
+
+CREATE TABLE settings(
+    id SERIAL PRIMARY KEY, 
+    email VARCHAR(255) UNIQUE NOT NULL, 
+    password VARCHAR(255) NOT NULL,  
+    notifications_enabled BOOLEAN DEFAULT TRUE, 
+    privacy_settings TEXT DEFAULT 'public',  
+    id_type VARCHAR(50),  
+    id_document TEXT,  
+    created_at TIMESTAMP DEFAULT NOW(),  
+    updated_at TIMESTAMP DEFAULT NOW()  
+);
+
+
+CREATE INDEX idx_users_email ON users (email);
+INSERT INTO users (email, password, notifications_enabled, privacy_settings, id_type, id_document)
+VALUES ('john.doe@example.com', 'password', TRUE, 'public', 'passport', '123456789')
+
+CREATE TABLE rewards(
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    referral_rewards INTEGER DEFAULT 0,  -- Rewards points for referrals
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Table for referral invites
+CREATE TABLE referral_invites (
+    id SERIAL PRIMARY KEY,
+    referrer_id INT REFERENCES users(id),
+    invitee_email VARCHAR(255),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Table for user follows (follower -> followee)
+CREATE TABLE user_follows(
+    id SERIAL PRIMARY KEY,
+    follower_id INT REFERENCES users(id),
+    followee_id INT REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Create indexes to speed up the queries
+CREATE INDEX idx_referrer_id ON referral_invites (referrer_id);
+CREATE INDEX idx_follower_followee ON user_follows (follower_id, followee_id);
+
+
+INSERT INTO users (email, password, referral_rewards)
+VALUES ('john@example.com', 10);
+
+INSERT INTO referral_invites (referrer_id, invitee_email)
+VALUES(1, 'invitee1@example.com');
+
+INSERT INTO user_follows (follower_id, followee_id)
+VALUES (1, 2);
